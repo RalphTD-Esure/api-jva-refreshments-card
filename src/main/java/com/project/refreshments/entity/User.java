@@ -1,4 +1,4 @@
-package com.project.refreshments.entities;
+package com.project.refreshments.entity;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

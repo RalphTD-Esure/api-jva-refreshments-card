@@ -1,6 +1,6 @@
-package com.project.refreshments.repositories;
+package com.project.refreshments.repository;
 
-import com.project.refreshments.entities.User;
+import com.project.refreshments.entity.User;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 

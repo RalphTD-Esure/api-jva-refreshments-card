@@ -1,9 +1,9 @@
-package com.project.refreshments.api;
+package com.project.refreshments;
 
 import java.util.stream.Stream;
 
-import com.project.refreshments.entities.User;
-import com.project.refreshments.repositories.UserRepository;
+import com.project.refreshments.entity.User;
+import com.project.refreshments.repository.UserRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

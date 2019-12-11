@@ -1,10 +1,10 @@
-package com.ralph.application.controllers;
-
-import com.ralph.application.entities.User;
-import com.ralph.application.repositories.UserRepository;
-import org.springframework.web.bind.annotation.*;
+package com.project.refreshments.api;
 
 import java.util.List;
+
+import com.project.refreshments.entity.User;
+import com.project.refreshments.repository.UserRepository;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")

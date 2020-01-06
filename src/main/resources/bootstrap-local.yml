@@ -1,0 +1,35 @@
+# Boot strap local YAML 
+---
+spring:
+  profiles:
+    active: local
+  cloud:
+    config:
+      enabled: false
+  datasource:
+    url: jdbc:h2://localhost:5432/local
+    username: api_jva_refreshments_card_local_user
+    password: password
+  jpa:
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate.dialect: org.hibernate.dialect.PostgreSQLDialect
+
+# Server/service default values.server:
+server:
+  server:
+  port: 9780
+
+management:
+  server:
+    port: 9781
+
+logging:
+  path: ${user.home}
+  level:
+    root: info
+    com.project.refreshments: debug
+
+
+

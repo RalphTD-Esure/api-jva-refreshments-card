@@ -5,7 +5,7 @@ import javax.transaction.Transactional;
 
 import com.project.api.refreshments.swagger.model.OnboardUserRequest;
 import com.project.refreshments.converter.OnboardUserRequestToUserConverter;
-import com.project.refreshments.entity.UsersCreation;
+import com.project.refreshments.entity.UserEntity;
 import com.project.refreshments.model.User;
 import com.project.refreshments.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -22,8 +22,9 @@ public class OnboardUserService
     private final OnboardUserRequestToUserConverter converter;
 
     @Transactional
-    public UsersCreation saveUserToDatastore(OnboardUserRequest onboardUserRequest){
+    public UserEntity saveUserToDatastore(OnboardUserRequest onboardUserRequest){
         final User user = converter.convert(onboardUserRequest);
-        return userRepository.save(user.toUsersTable(LocalDateTime.now()));
+        return userRepository.save(user.createUserEntity(LocalDateTime.now()));
     }
+
 }

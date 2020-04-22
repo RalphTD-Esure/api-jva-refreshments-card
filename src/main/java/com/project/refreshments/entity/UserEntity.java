@@ -14,7 +14,7 @@ import lombok.experimental.Accessors;
 @Table(name = "users")
 @Data
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
-public class UsersCreation
+public class UserEntity
 {
 
     @Column
@@ -22,19 +22,19 @@ public class UsersCreation
     @Id
     private BigInteger id;
 
-    @Column(name = "first_name")
+    @Column(name = "first_name", nullable = false)
     private String firstName;
 
-    @Column(name = "last_name")
+    @Column(name = "last_name", nullable = false)
     private String lastName;
 
-    @Column(name = "balance")
+    @Column(name = "balance", nullable = false)
     private Float balance;
 
-    @Column(name = "email_address")
+    @Column(name = "email_address", nullable = false)
     private String emailAddress;
 
-    @Column(name = "creation_date")
+    @Column(name = "creation_date", nullable = false)
     private LocalDateTime creationDate;
 
 

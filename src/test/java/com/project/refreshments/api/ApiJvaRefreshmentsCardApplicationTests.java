@@ -3,21 +3,21 @@
 //class ApiJvaRefreshmentsCardApplicationTests {
 //
 //	@Mock
-//	private OnboardUserService onboardUserService;
+//	private RegistrationService registrationService;
 //
-//    private static final OnboardUserRequest onboardUserRequest = new OnboardUserRequest();
+//    private static final RegistrationRequestDto registrationRequest = new RegistrationRequestDto();
 //
 //	private RefreshmentsCardController refreshmentsCardController;
 //
 //	@Before
 //	public void setUp() {
 //        MockitoAnnotations.initMocks(this);
-//        refreshmentsCardController = new RefreshmentsCardController(onboardUserService);
+//        refreshmentsCardController = new RefreshmentsCardController(registrationService);
 //    }
 //
 //    @Test
-//    public void testOnboardUserSucceeds() {
-//        OnboardUserResponse onboardUserResponse = refreshmentsCardController.onboardUser(onboardUserRequest);
-//        verify(onboardUserService).saveUserToDatastore(onboardUserRequest);
+//    public void testRegistrationSucceeds() {
+//        RegistrationResponse registrationResponse = refreshmentsCardController.registration(registrationRequest);
+//        verify(registrationService).saveUserToDatastore(registrationRequest);
 //    }
 //}

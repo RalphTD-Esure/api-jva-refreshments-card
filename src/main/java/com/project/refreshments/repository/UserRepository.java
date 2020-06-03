@@ -1,10 +1,15 @@
 package com.project.refreshments.repository;
 
-import com.project.refreshments.entity.UsersCreation;
-import org.springframework.data.repository.CrudRepository;
+import java.util.Optional;
+
+import com.project.refreshments.entity.UserEntity;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface UserRepository extends CrudRepository<UsersCreation, Long>
+public interface UserRepository extends JpaRepository<UserEntity, Integer>
 {
+   Optional<UserEntity> findByEmployeeId(Integer employeeId);
+
+   Optional<UserEntity> findByUsername(String username);
 }

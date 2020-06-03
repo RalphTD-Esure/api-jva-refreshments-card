@@ -25,26 +25,26 @@
 <div th:if="${param.logout}">
     You have been logged out.
 </div>
-<h1 class="text-center" style="margin-bottom:5%%; margin-top:10%" th:text="#{label.form.loginTitle}">form</h1>
+<h1 class="text-center" style="margin-bottom:5%; margin-top:10%" th:text="#{label.form.loginTitle}">form</h1>
 <div class="container">
     <div class="row align-items-center">
-        <form class="col-4 offset-4" th:action="@{/user/login}" method="post">
+        <form class="col-4 offset-4" th:action="@{/user/postLogin}" th:object="${login}" method="post">
             <div class="form-group">
                 <label for="employeeId">Employee ID</label>
                 <input type="email" class="form-control" id="employeeId" name="employeeId" aria-describedby="IDHelp"
-                       placeholder="Enter your Employee ID">
+                       placeholder="Enter your Employee ID" th:value="@{employeeId}">
                 <small id="IDHelp" class="form-text text-muted">This is your 6 digit Bows Formula 1 Employee ID</small>
             </div>
             <div class="form-group">
                 <label for="inputPassword">Password</label>
-                <input type="password" class="form-control" id="inputPassword" placeholder="Password">
+                <input type="password" class="form-control" id="inputPassword" placeholder="Password" th:value="@{password}">
                 <small id="password" class="form-text text-muted">This is the password you chose on
                     registration.</small>
             </div>
             <div class="form-group">
                 <label for="PIN">PIN</label>
-                <input type="password" class="form-control" id="PIN" placeholder="Your 4 digit PIN">
-                <small id="PIN" class="form-text text-muted">This is the 4 digit PIN you chose on registration.</small>
+                <input type="password" class="form-control" id="PIN" placeholder="Your 4 digit PIN" th:value="@{pin}">
+                <small class="form-text text-muted">This is the 4 digit PIN you chose on registration.</small>
             </div>
             <button class="btn-primary form-control" type="submit" th:text="#{label.form.submit}">submit</button>
             <button class="btn-primary form-control" style="margin-top:5rem" type="submit" th:text="#{label.form.registerHere}">registerHere</button>

@@ -24,6 +24,11 @@ CREATE TABLE ACCOUNTS (
   is_active BIT
 );
 
+CREATE TABLE AUTHORITIES (
+    authority_id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(250)
+);
+
 CREATE TABLE TOP_UPS (
   top_up_id BIGINT AUTO_INCREMENT PRIMARY KEY,
   account_id BIGINT NOT NULL,
@@ -38,6 +43,4 @@ CREATE TABLE PURCHASES (
   itemCode VARCHAR(250),
   purchase_date DATE
 );
-
-
 

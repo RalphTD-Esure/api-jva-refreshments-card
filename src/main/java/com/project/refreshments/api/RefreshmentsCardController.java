@@ -10,7 +10,7 @@ import com.project.api.refreshments.swagger.model.TopUpResponse;
 import com.project.refreshments.dto.RegistrationRequestDto;
 import com.project.refreshments.exception.UserAlreadyExistsException;
 import com.project.refreshments.model.AuthenticatedUser;
-import com.project.refreshments.model.AuthenticationRequest;
+import com.project.refreshments.dto.AuthenticationRequestDto;
 import com.project.refreshments.service.TopUpService;
 import com.project.refreshments.service.UserService;
 import io.swagger.annotations.Api;
@@ -62,7 +62,7 @@ public class RefreshmentsCardController {
     {
         log.debug("Adding user with credentials: {}", registrationRequestDto);
         try {
-            final AuthenticatedUser authenticatedUser = userService.register(registrationRequestDto);
+             userService.register(registrationRequestDto);
         } catch (final UserAlreadyExistsException e) {
             log.info("A user with the EmployeeId " + registrationRequestDto.getEmployeeId() + " already exists.");
             ModelAndView modelAndView = new ModelAndView("registration", "user", registrationRequestDto);
@@ -85,7 +85,7 @@ public class RefreshmentsCardController {
 
     @PostMapping("/user/performLogin")
     public ResponseEntity<AuthenticatedUser>
-    signIn(@RequestBody @Valid AuthenticationRequest authenticationRequest) {
+    signIn(@RequestBody @Valid AuthenticationRequestDto authenticationRequest) {
         System.out.println(authenticationRequest.getPin());
         return new ResponseEntity<>(HttpStatus.OK);
     }

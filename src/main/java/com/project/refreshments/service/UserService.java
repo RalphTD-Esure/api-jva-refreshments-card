@@ -8,15 +8,10 @@ import com.project.refreshments.entity.UserEntity;
 import com.project.refreshments.exception.UserAlreadyExistsException;
 import com.project.refreshments.factory.AuthenticatedUserFactory;
 import com.project.refreshments.model.AuthenticatedUser;
-import com.project.refreshments.model.AuthenticationRequest;
 import com.project.refreshments.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -58,27 +53,27 @@ public class UserService
                 .setPassword(passwordEncoder.encode(registrationRequest.getPassword())).setPin(passwordEncoder.encode(registrationRequest.getPin())).setCredentialsNonExpired(true);
     }
 
-    public AuthenticatedUser signIn(final AuthenticationRequest authenticationRequest) {
-        try {
-            final String username = authenticationRequest.getUsername();
-            final UserEntity userEntity = userRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("Username " + username + "not found"));
-            if (userEntity.isCredentialsNonExpired()) {
-                userEntity.setCredentialsNonExpired(false);
-                userRepository.save(userEntity);
-                return authenticatedUserFactory.logOut(userEntity);
-            }
-            else {
-                userEntity.setCredentialsNonExpired(true);
-                userRepository.save(userEntity);
-                authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, authenticationRequest.getPin()));
-                return authenticatedUserFactory.create(userEntity);
-            }
-
-
-        } catch (AuthenticationException e) {
-            throw new BadCredentialsException("Invalid username/password supplied", e);
-        }
-    }
+//    public AuthenticatedUser signIn(final AuthenticationRequestDto authenticationRequest) {
+//        try {
+//            final String username = authenticationRequest.getUsername();
+//            final UserEntity userEntity = userRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("Username " + username + "not found"));
+//            if (userEntity.credentialsNonExpired()) {
+//                userEntity.setCredentialsNonExpired(false);
+//                userRepository.save(userEntity);
+//                return authenticatedUserFactory.logOut(userEntity);
+//            }
+//            else {
+//                userEntity.setCredentialsNonExpired(true);
+//                userRepository.save(userEntity);
+//                authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, authenticationRequest.getPin()));
+//                return authenticatedUserFactory.create(userEntity);
+//            }
+//
+//
+//        } catch (AuthenticationException e) {
+//            throw new BadCredentialsException("Invalid username/password supplied", e);
+//        }
+//    }
 
 
 }

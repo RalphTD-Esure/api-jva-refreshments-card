@@ -1,22 +1,28 @@
 package com.project.refreshments.security;
 
+import com.project.refreshments.entity.UserEntity;
+import com.project.refreshments.model.CustomUserDetails;
 import com.project.refreshments.repository.UserRepository;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
-@Component
+@Slf4j
+@Service("userDetailsService")
 public class UserDetailsServiceImp implements UserDetailsService
 {
-    private UserRepository users;
-    public UserDetailsServiceImp(UserRepository users) {
-        this.users = users;
-    }
+    @Autowired
+    private UserRepository userRepository;
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException
     {
-        return this.users.findByUsername(username)
-            .orElseThrow(() -> new UsernameNotFoundException("Username: " + username + " not found"));
+        log.info("Loading user with username: " + username);
+        UserEntity userEntity = userRepository.findByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException("Username: " + username + " not found"));
+        return new CustomUserDetails(userEntity);
     }
 }

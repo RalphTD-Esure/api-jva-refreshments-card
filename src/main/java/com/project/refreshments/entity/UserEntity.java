@@ -1,9 +1,11 @@
 package com.project.refreshments.entity;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.Collection;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 import javax.persistence.*;
 
@@ -13,7 +15,6 @@ import lombok.experimental.Accessors;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
 
 @Entity
 @Accessors(chain = true)
@@ -21,10 +22,10 @@ import org.springframework.security.core.userdetails.UserDetails;
 @Getter
 @Setter
 //@NoArgsConstructor(access = AccessLevel.PUBLIC)
-public class UserEntity implements UserDetails
+public class UserEntity implements Serializable
 {
     private static final long serialVersionUID = 1L;
-    private static final List<GrantedAuthority> AUTHORITIES = Collections.singletonList(new SimpleGrantedAuthority("ROLE_USER"));
+    private static final List<GrantedAuthority> AUTHORITIES = Collections.singletonList(new SimpleGrantedAuthority("USER"));
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
@@ -59,14 +60,15 @@ public class UserEntity implements UserDetails
     private Boolean credentialsNonExpired;
 
 
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinTable(name = "user_authority",
+            joinColumns = { @JoinColumn(name = "user_id") },
+            inverseJoinColumns = { @JoinColumn(name = "authority_id") })
+
+    private Set<AuthorityEntity> authorities = new HashSet<>();
+
     public List<String> getRoles() {
         return AUTHORITIES.stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList());
-    }
-
-    @Override
-    public Collection<? extends GrantedAuthority>
-    getAuthorities() {
-        return AUTHORITIES;
     }
 
     @Override
@@ -87,23 +89,4 @@ public class UserEntity implements UserDetails
         return "User{" + "id=" + employeeId + ", name=" + firstName + ", email=" + email + '}';
     }
 
-    @Override public boolean isAccountNonExpired()
-    {
-        return true;
-    }
-
-    @Override public boolean isAccountNonLocked()
-    {
-        return true;
-    }
-
-    @Override public boolean isCredentialsNonExpired()
-    {
-        return credentialsNonExpired;
-    }
-
-    @Override public boolean isEnabled()
-    {
-        return true;
-    }
 }

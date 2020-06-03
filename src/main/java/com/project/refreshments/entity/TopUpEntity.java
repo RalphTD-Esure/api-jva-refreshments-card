@@ -11,20 +11,20 @@ import lombok.experimental.Accessors;
 
 @Entity
 @Accessors(chain = true)
-@Table(name = "transaction")
+@Table(name = "top_ups")
 @Data
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
-public class TransactionEntity
+public class TopUpEntity
 {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long transactionId;
+    private Integer transactionId;
 
     @Column(nullable = false)
-    private long accountId;
+    private Integer accountId;
 
     @Column(nullable = false)
-    private BigDecimal price;
+    private BigDecimal amount;
 
     @Column(nullable = false)
     private boolean isToppingUp;
@@ -33,8 +33,6 @@ public class TransactionEntity
     private String item;
 
     @Column(nullable = false)
-    private LocalDateTime transactionDate;
+    private LocalDateTime topUpDate;
 
-    @Column(nullable = true)
-    private String location;
 }

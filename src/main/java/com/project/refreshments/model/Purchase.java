@@ -8,7 +8,7 @@ import lombok.Data;
 @Data
 public class Purchase
 {
-    Long accountId;
+    Integer accountId;
     List<Item> items;
     BigDecimal totalPrice = calculateTotalPrice(items);
 

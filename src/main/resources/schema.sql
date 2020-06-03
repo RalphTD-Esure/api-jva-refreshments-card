@@ -1,0 +1,43 @@
+DROP TABLE IF EXISTS USERS;
+DROP TABLE IF EXISTS ACCOUNTS;
+DROP TABLE IF EXISTS TOP_UPS;
+DROP TABLE IF EXISTS PURCHASES;
+
+CREATE TABLE USERS (
+  user_id BIGINT AUTO_INCREMENT PRIMARY KEY,
+  employee_id BIGINT,
+  username VARCHAR(16),
+  first_name VARCHAR(250),
+  last_name VARCHAR(250),
+  email VARCHAR(250),
+  password VARCHAR(250),
+  pin VARCHAR(250),
+  creation_date TIMESTAMP,
+  credentials_non_expired BOOLEAN
+);
+
+CREATE TABLE ACCOUNTS (
+  account_id BIGINT AUTO_INCREMENT  PRIMARY KEY,
+  employee_id BIGINT NOT NULL,
+  balance DECIMAL,
+  creation_date DATETIME,
+  is_active BIT
+);
+
+CREATE TABLE TOP_UPS (
+  top_up_id BIGINT AUTO_INCREMENT PRIMARY KEY,
+  account_id BIGINT NOT NULL,
+  amount DECIMAL,
+  top_up_date DATE
+);
+
+CREATE TABLE PURCHASES (
+  purchase_id BIGINT AUTO_INCREMENT  PRIMARY KEY,
+  account_id BIGINT NOT NULL,
+  price DECIMAL,
+  itemCode VARCHAR(250),
+  purchase_date DATE
+);
+
+
+

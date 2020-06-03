@@ -1,0 +1,49 @@
+# Boot strap local YAML 
+---
+spring:
+  application:
+    name: api-jva-refreshments-card
+  profiles:
+    active: local
+  cloud:
+    config:
+      enabled: false
+  jpa:
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate.dialect: org.hibernate.dialect.PostgreSQLDialect
+  thymeleaf:
+    cache: false
+    enabled: true
+    mode: HTML5
+    suffix: .html
+
+# Server/service default values.server:
+server:
+  port: 9670
+  servlet:
+    context-path: /api-jva-refreshments-card
+  tomcat:
+    basedir: /tmp/logs/api-jva-refreshments-card
+    accesslog:
+      enabled: true
+      buffered: false
+      directory: healthd
+      prefix: application.log
+      suffix:
+      file-date-format: .yyyy-MM-dd-HH
+      pattern: '%{sec}t.%{msec_frac}t"%U"%s"%T"%T"%{x-forwarded-for}i'
+
+management:
+  server:
+    port: 9781
+
+logging:
+  path: ${user.home}
+  level:
+    root: info
+    com.project.refreshments: debug
+
+
+

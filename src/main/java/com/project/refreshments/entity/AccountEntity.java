@@ -1,39 +1,41 @@
 package com.project.refreshments.entity;
 
 import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.time.LocalDateTime;
 import javax.persistence.*;
 
+import lombok.AccessLevel;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
-import org.hibernate.annotations.Table;
+import org.hibernate.annotations.CreationTimestamp;
 
 @Entity
 @Accessors(chain = true)
+@Table(name = "accounts")
 @Data
-@Table(name = "account")
+@NoArgsConstructor(access = AccessLevel.PUBLIC)
 public class AccountEntity
 {
-    @Column
+
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    private BigInteger accountId;
+    @Column(name = "account_id", nullable = false, unique = true)
+    private Integer accountId;
 
-    @Column(name = 'person_id', nullable = false, unique = true)
-    private long personId;
-
-    @Column(name = "first_name", nullable = false)
-    private String firstName;
-
-    @Column(name = "last_name", nullable = false)
-    private String lastName;
+    @Column(name = "employee_id")
+    private Integer employeeId;
 
     @Column(name = "balance", nullable = false)
     private BigDecimal balance;
 
-    @Column(name = "creation_date", nullable = false)
+    @Column(name = "creation_date", updatable = false, nullable = false)
+    @CreationTimestamp
     private LocalDateTime creationDate;
+
+    @Column(name = "is_active", nullable = false)
+    private boolean isActive;
+
 
     public AccountEntity addToBalance(BigDecimal amount) {
         balance = balance == null

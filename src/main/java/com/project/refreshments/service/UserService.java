@@ -50,7 +50,7 @@ public class UserService
                 .setUsername(registrationRequest.getCardId()).setCreationDate(createdDate)
                 .setFirstName(registrationRequest.getFirstName())
                 .setLastName(registrationRequest.getLastName()).setEmail(registrationRequest.getEmail())
-                .setPassword(passwordEncoder.encode(registrationRequest.getPassword())).setPin(passwordEncoder.encode(registrationRequest.getPin())).setCredentialsNonExpired(true);
+                .setPassword(passwordEncoder.encode(registrationRequest.getPassword())).setPin(passwordEncoder.encode(registrationRequest.getPin())).setActive(true).setRoles("USER");
     }
 
 //    public AuthenticatedUser signIn(final AuthenticationRequestDto authenticationRequest) {

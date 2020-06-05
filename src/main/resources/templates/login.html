@@ -1,13 +1,11 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="https://thymeleaf.org"
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://thymeleaf.org"
       xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
-
 <head>
     <title>Login</title>
-    <link rel="stylesheet" th:href="@{/css/styles.css}">
+    <link rel="stylesheet" th:href="@{/css/styles.css}"/>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"/>
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
             integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
             crossorigin="anonymous"></script>
@@ -28,26 +26,25 @@
 <h1 class="text-center" style="margin-bottom:5%; margin-top:10%" th:text="#{label.form.loginTitle}">form</h1>
 <div class="container">
     <div class="row align-items-center">
-        <form class="col-4 offset-4" th:action="@{/user/postLogin}" th:object="${login}" method="post">
+        <form class="col-4 offset-4" th:action="@{/login}" th:object="${loginForm}" method="POST" enctype="utf8">
             <div class="form-group">
-                <label for="employeeId">Employee ID</label>
-                <input type="email" class="form-control" id="employeeId" name="employeeId" aria-describedby="IDHelp"
-                       placeholder="Enter your Employee ID" th:value="@{employeeId}">
-                <small id="IDHelp" class="form-text text-muted">This is your 6 digit Bows Formula 1 Employee ID</small>
+                <label for="username">Username / CardId</label>
+                <input class="form-control" id="username" name="username" aria-describedby="IDHelp" th:field="*{username}"/>
+                <small id="IDHelp" class="form-text text-muted">This is your 16 digit Bows Formula 1 Employee ID</small>
             </div>
             <div class="form-group">
                 <label for="inputPassword">Password</label>
-                <input type="password" class="form-control" id="inputPassword" placeholder="Password" th:value="@{password}">
+                <input type="password" class="form-control" id="inputPassword" th:field="*{password}"/>
                 <small id="password" class="form-text text-muted">This is the password you chose on
                     registration.</small>
             </div>
             <div class="form-group">
                 <label for="PIN">PIN</label>
-                <input type="password" class="form-control" id="PIN" placeholder="Your 4 digit PIN" th:value="@{pin}">
+                <input type="password" class="form-control" id="PIN" th:field="*{pin}"/>
                 <small class="form-text text-muted">This is the 4 digit PIN you chose on registration.</small>
             </div>
             <button class="btn-primary form-control" type="submit" th:text="#{label.form.submit}">submit</button>
-            <button class="btn-primary form-control" style="margin-top:5rem" type="submit" th:text="#{label.form.registerHere}">registerHere</button>
+<!--            <button class="btn-primary form-control" style="margin-top:5rem" type="submit" th:text="#{label.form.registerHere}">registerHere</button>-->
 
         </form>
     </div>

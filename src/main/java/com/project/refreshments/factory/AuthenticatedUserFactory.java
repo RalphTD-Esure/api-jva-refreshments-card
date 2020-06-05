@@ -6,8 +6,6 @@ import com.project.refreshments.security.JwtTokenProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-
-
 @Component
 public class AuthenticatedUserFactory {
     private final JwtTokenProvider jwtTokenProvider;

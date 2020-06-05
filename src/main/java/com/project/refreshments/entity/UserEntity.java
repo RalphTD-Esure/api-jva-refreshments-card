@@ -3,10 +3,7 @@ package com.project.refreshments.entity;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
 import javax.persistence.*;
 
 import lombok.Getter;
@@ -56,8 +53,10 @@ public class UserEntity implements Serializable
     @Column(name = "creation_date", nullable = false)
     private LocalDateTime creationDate;
 
-    @Column(name ="credentials_non_expired", nullable = false)
-    private Boolean credentialsNonExpired;
+    @Column(name ="active", nullable = false)
+    private Boolean active;
+
+    private String roles;
 
 
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
@@ -65,11 +64,6 @@ public class UserEntity implements Serializable
             joinColumns = { @JoinColumn(name = "user_id") },
             inverseJoinColumns = { @JoinColumn(name = "authority_id") })
 
-    private Set<AuthorityEntity> authorities = new HashSet<>();
-
-    public List<String> getRoles() {
-        return AUTHORITIES.stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList());
-    }
 
     @Override
     public boolean equals(Object rhs) {

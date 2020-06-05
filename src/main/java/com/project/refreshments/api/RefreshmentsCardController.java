@@ -9,8 +9,6 @@ import com.project.api.refreshments.swagger.model.TopUpRequest;
 import com.project.api.refreshments.swagger.model.TopUpResponse;
 import com.project.refreshments.dto.RegistrationRequestDto;
 import com.project.refreshments.exception.UserAlreadyExistsException;
-import com.project.refreshments.model.AuthenticatedUser;
-import com.project.refreshments.dto.AuthenticationRequestDto;
 import com.project.refreshments.service.TopUpService;
 import com.project.refreshments.service.UserService;
 import io.swagger.annotations.Api;
@@ -25,18 +23,17 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
-@RequestMapping
 @Slf4j
 @Api(value = "Refreshments Card")
 public class RefreshmentsCardController {
 
     private final UserService userService;
-    private final TopUpService addFundsService;
+    private final TopUpService topUpService;
 
-    public RefreshmentsCardController(final UserService registrationService,
+    public RefreshmentsCardController(final UserService userService,
             TopUpService topUpService) {
-        this.userService = registrationService;
-        this.addFundsService = topUpService;
+        this.userService = userService;
+        this.topUpService = topUpService;
     }
 
 //    @PostMapping("/user/registration")
@@ -57,7 +54,7 @@ public class RefreshmentsCardController {
 //                .successMessage("Successfully added " + registrationRequest.getFirstName() + " " + registrationRequest.getLastName() + " to the system.")), HttpStatus.ACCEPTED);
 //    }
 
-    @PostMapping("/user/registration")
+    @PostMapping("/registration")
     public ModelAndView createModelAndView(@ModelAttribute("user") @Valid RegistrationRequestDto registrationRequestDto, HttpServletRequest request, Errors errors)
     {
         log.debug("Adding user with credentials: {}", registrationRequestDto);
@@ -74,7 +71,7 @@ public class RefreshmentsCardController {
 
 //    "An account with the employee ID " + registrationRequestDto.getEmployeeId() + "already exists."
 
-    @GetMapping("/user/registration")
+    @GetMapping("/registration")
     public String showRegistrationForm(WebRequest webRequest, Model model) {
         RegistrationRequestDto registrationRequestDto = new RegistrationRequestDto();
         model.addAttribute("user", registrationRequestDto);
@@ -82,18 +79,10 @@ public class RefreshmentsCardController {
         return "registration";
     }
 
-
-    @PostMapping("/user/performLogin")
-    public ResponseEntity<AuthenticatedUser>
-    signIn(@RequestBody @Valid AuthenticationRequestDto authenticationRequest) {
-        System.out.println(authenticationRequest.getPin());
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
-
     @PostMapping("/top-up")
     public ResponseEntity<TopUpResponse> addFunds(@RequestBody TopUpRequest topUpRequest) {
 
-        BigDecimal newBalance = addFundsService.addFunds(topUpRequest);
+        BigDecimal newBalance = topUpService.addFunds(topUpRequest);
 
         return new ResponseEntity<>(new TopUpResponse().addResultsItem(new TopUpDetail().successMessage("Successfully added " + topUpRequest.getTopUpAmount() + "to your account. Your new balance is: " + newBalance)), HttpStatus.OK);
     }

@@ -12,8 +12,9 @@ CREATE TABLE USERS (
   email VARCHAR(250),
   password VARCHAR(250),
   pin VARCHAR(250),
+  roles VARCHAR(250),
   creation_date TIMESTAMP,
-  credentials_non_expired BOOLEAN
+  active BOOLEAN
 );
 
 CREATE TABLE ACCOUNTS (
@@ -24,7 +25,7 @@ CREATE TABLE ACCOUNTS (
   is_active BIT
 );
 
-CREATE TABLE AUTHORITIES (
+CREATE TABLE AUTHORITY (
     authority_id BIGINT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(250)
 );

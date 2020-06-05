@@ -1,13 +1,13 @@
 package com.project.refreshments.dto;
 
-import java.io.Serializable;
+import javax.validation.constraints.Size;
 
 import lombok.Data;
 
 @Data
-public class AuthenticationRequestDto implements Serializable
+public class AuthenticationRequestDto
 {
-    private static final long serialVersionUID = 1L;
+    @Size(min=16)
     private String username;
     private String password;
     private String pin;

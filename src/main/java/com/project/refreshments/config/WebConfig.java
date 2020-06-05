@@ -17,10 +17,11 @@ public class WebConfig implements WebMvcConfigurer
 {
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
-        registry.addViewController("/user/login").setViewName("login");
-        registry.addViewController("/user/registration").setViewName("registration");
-        registry.addViewController("/user/registrationSuccess").setViewName("registrationSuccess");
-        registry.addViewController("/user/homepage").setViewName("homepage");
+        registry.addViewController("/hello").setViewName("hello");
+        registry.addViewController("/login").setViewName("login");
+        registry.addViewController("/registration").setViewName("registration");
+        registry.addViewController("/registrationSuccess").setViewName("registrationSuccess");
+        registry.addViewController("/homepage").setViewName("homepage");
     }
 
     @Bean

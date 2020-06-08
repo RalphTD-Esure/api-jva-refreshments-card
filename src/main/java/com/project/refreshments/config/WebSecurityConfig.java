@@ -37,11 +37,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter
                 .antMatchers("/**").hasRole("USER")
                 .antMatchers("/user/login/**", "/login").permitAll()
                 .antMatchers("/", "/css/**", "/*.css").permitAll()
-                .antMatchers("/user/homepage").permitAll()
+                .antMatchers("/user/homepage").hasRole("USER")
                 .anyRequest().authenticated()
                 .and()
                 .formLogin().loginPage("/user/login")
-                .loginProcessingUrl("/user/login").defaultSuccessUrl("/homepage.html").failureUrl("/login?error").permitAll()
+                .loginProcessingUrl("/user/login").defaultSuccessUrl("/homepage", true).failureUrl("/login?error").permitAll()
                 .and().apply(new JwtSecurityConfigurer(jwtTokenProvider));
 
                 httpSecurity.headers().frameOptions().disable();

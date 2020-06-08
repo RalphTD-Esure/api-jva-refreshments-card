@@ -34,7 +34,7 @@ public class UserService
     public AuthenticatedUser register(RegistrationRequestDto registrationRequest)
     {
         log.debug("Registering user with information: {}", registrationRequest);
-        if (userExists(registrationRequest.getEmployeeId()))
+        if (userExists(registrationRequest.getCardId()))
         {
             throw new UserAlreadyExistsException(
                     "A user with the Employee ID " + registrationRequest.getEmployeeId() + " already exists.");
@@ -43,9 +43,9 @@ public class UserService
         return authenticatedUserFactory.create(userEntity);
     }
 
-    private final boolean userExists(Integer employeeId)
+    private final boolean userExists(String cardId)
     {
-        return userRepository.findByEmployeeId(employeeId).isPresent();
+        return userRepository.findByUsername(cardId).isPresent();
     }
 
     public UserEntity createUserEntity(final LocalDateTime createdDate,

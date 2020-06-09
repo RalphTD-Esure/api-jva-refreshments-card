@@ -1,12 +1,5 @@
 package com.project.refreshments.entity;
 
-import java.time.LocalDateTime;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
-import java.util.stream.Collectors;
-import javax.persistence.*;
-
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
@@ -15,26 +8,34 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import javax.persistence.*;
+import java.io.Serializable;
+import java.time.LocalDateTime;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Entity
 @Accessors(chain = true)
 @Table(name = "users")
 @Getter
 @Setter
 //@NoArgsConstructor(access = AccessLevel.PUBLIC)
-public class UserEntity implements UserDetails
+public class UserEntity implements UserDetails, Serializable
 {
     private static final long serialVersionUID = 1L;
     private static final List<GrantedAuthority> AUTHORITIES = Collections.singletonList(new SimpleGrantedAuthority("ROLE_USER"));
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    @Column(name = "user_id")
-    private Integer userId;
+    @Column(name = "id", nullable = false)
+    private Integer id;
 
-    @Column(name = "employee_id")
+    @Column(name = "employee_id", nullable = false)
     private Integer employeeId;
 
-    @Column(name = "username")
+    @Column(name = "username", nullable = false)
     private String username;
 
     @Column(name = "first_name", nullable = false)
@@ -46,11 +47,11 @@ public class UserEntity implements UserDetails
     @Column(name = "email", nullable = false)
     private String email;
 
-    @Column(name = "password", nullable = false)
+    @Column(name ="password", nullable = false)
     private String password;
 
-    @Column(name ="pin", nullable = false)
-    private String pin;
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    private AccountEntity account;
 
     @Column(name = "creation_date", nullable = false)
     private LocalDateTime creationDate;

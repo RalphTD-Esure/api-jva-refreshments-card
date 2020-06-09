@@ -13,7 +13,7 @@ public class AuthenticatedUser extends HashMap<String, String>
     private static final String TOKEN = "token";
     private static final String MESSAGE = "message";
 
-    public AuthenticatedUser setUserName(final String username) {
+    public AuthenticatedUser setUsername(final String username) {
         this.put(USERNAME, username);
         return this;
     }
@@ -23,7 +23,7 @@ public class AuthenticatedUser extends HashMap<String, String>
         return this;
     }
 
-    public String getUserName() {
+    public String getUsername() {
         return this.get(USERNAME);
     }
 

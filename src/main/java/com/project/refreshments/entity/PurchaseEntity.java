@@ -1,13 +1,13 @@
 package com.project.refreshments.entity;
 
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
-import javax.persistence.*;
-
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
+
+import javax.persistence.*;
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 @Entity
 @Accessors(chain = true)
@@ -18,17 +18,20 @@ public class PurchaseEntity
 {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long purchaseId;
+    @Column(name = "purchase_id")
+    private Integer purchaseId;
 
-    @Column(nullable = false)
+    @Column(name = "account_id", nullable = false)
     private long accountId;
 
-    @Column(nullable = false)
+    @Column(name = "price", nullable = false)
     private BigDecimal price;
 
-    @Column(nullable = false)
+    @Column(name = "item_id", nullable = false)
     private String itemId;
 
     @Column(nullable = false)
     private LocalDateTime transactionDate;
+
+
 }

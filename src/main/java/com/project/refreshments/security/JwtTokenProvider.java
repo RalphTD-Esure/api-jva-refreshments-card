@@ -1,11 +1,5 @@
 package com.project.refreshments.security;
 
-import java.util.Base64;
-import java.util.Date;
-import java.util.List;
-import javax.annotation.PostConstruct;
-import javax.servlet.http.HttpServletRequest;
-
 import com.project.refreshments.config.JwtProperties;
 import com.project.refreshments.exception.InvalidJwtAuthenticationException;
 import io.jsonwebtoken.*;
@@ -13,8 +7,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
+
+import javax.annotation.PostConstruct;
+import javax.servlet.http.HttpServletRequest;
+import java.util.Base64;
+import java.util.Date;
+import java.util.List;
 
 
 @Component
@@ -24,7 +23,7 @@ public class JwtTokenProvider {
     private JwtProperties jwtProperties;
 
     @Autowired
-    private UserDetailsService userDetailsService;
+    private UserDetailsServiceImp userDetailsService;
 
     private String secretKey;
 

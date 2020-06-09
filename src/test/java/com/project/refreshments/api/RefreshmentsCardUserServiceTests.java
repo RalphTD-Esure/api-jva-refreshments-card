@@ -1,13 +1,5 @@
 package com.project.refreshments.api;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
-import java.time.LocalDateTime;
-import java.util.Optional;
-
 import com.project.refreshments.dto.RegistrationRequestDto;
 import com.project.refreshments.entity.UserEntity;
 import com.project.refreshments.exception.UserAlreadyExistsException;
@@ -25,6 +17,14 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import java.time.LocalDateTime;
+import java.util.Optional;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
 public class RefreshmentsCardUserServiceTests
 {
     private static final Integer ONBOARD_EMPLOYEE_ID = 12345;
@@ -32,13 +32,8 @@ public class RefreshmentsCardUserServiceTests
     private static final String ONBOARD_FIRST_NAME = "John";
     private static final String ONBOARD_LAST_NAME = "Smith";
     private static final String ONBOARD_EMAIL = "john@smith.com";
-    private static final String ONBOARD_PASSWORD = "password";
-    private static final String ONBOARD_MATCHING_PASSWORD = "password";
-    private static final String ONBOARD_PIN = "js1234";
-
+    private static final String ONBOARD_PIN = "1234";
     private static final LocalDateTime CREATED_DATE = LocalDateTime.now();
-
-
 
     @Mock
     private UserRepository userRepository;
@@ -75,12 +70,12 @@ public class RefreshmentsCardUserServiceTests
         ArgumentCaptor<UserEntity> userEntityArgumentCaptor = ArgumentCaptor.forClass(UserEntity.class);
         when(userRepository.findByUsername(ONBOARD_CARD_ID)).thenReturn(Optional.empty());
         when(authenticatedUserFactory.create(userEntityArgumentCaptor.capture()))
-                .thenReturn(new AuthenticatedUser().setUserName(ONBOARD_CARD_ID));
+                .thenReturn(new AuthenticatedUser().setUsername(ONBOARD_CARD_ID));
         when(userService.createUserEntity(CREATED_DATE, registrationRequest)).thenReturn(any(UserEntity.class));
         AuthenticatedUser authenticatedUser = userService.register(registrationRequest);
-        assertThat(authenticatedUser.getUserName()).isEqualTo(ONBOARD_CARD_ID);
+        assertThat(authenticatedUser.getUsername()).isEqualTo(ONBOARD_CARD_ID);
         verify(userRepository).saveAndFlush(userEntityArgumentCaptor.capture());
-        assertThat(authenticatedUser.getUserName()).isEqualTo(ONBOARD_CARD_ID);
+        assertThat(authenticatedUser.getUsername()).isEqualTo(ONBOARD_CARD_ID);
         assertThat(userEntityArgumentCaptor.getValue())
                 .hasFieldOrPropertyWithValue("username", ONBOARD_CARD_ID)
                 .hasFieldOrPropertyWithValue("employeeId", ONBOARD_EMPLOYEE_ID)
@@ -89,7 +84,6 @@ public class RefreshmentsCardUserServiceTests
                 .hasFieldOrPropertyWithValue("email", ONBOARD_EMAIL);
         assertThat(userEntityArgumentCaptor.getValue())
                 .hasFieldOrProperty("creationDate")
-                .hasFieldOrProperty("pin")
                 .hasFieldOrProperty("password");
     }
 
@@ -111,18 +105,16 @@ public class RefreshmentsCardUserServiceTests
         registrationRequest.setFirstName(ONBOARD_FIRST_NAME);
         registrationRequest.setLastName(ONBOARD_LAST_NAME);
         registrationRequest.setEmail(ONBOARD_EMAIL);
-        registrationRequest.setPassword(ONBOARD_PASSWORD);
-        registrationRequest.setMatchingPassword(ONBOARD_MATCHING_PASSWORD);
         registrationRequest.setPin(ONBOARD_PIN);
+        registrationRequest.setConfirmPin(ONBOARD_PIN);
 
         return registrationRequest;
     }
 
     private UserEntity createUserEntity() {
         UserEntity userEntity = new UserEntity();
-        userEntity.setPin(ONBOARD_PIN);
         userEntity.setUsername(ONBOARD_CARD_ID);
-        userEntity.setPassword(passwordEncoder.encode(ONBOARD_PASSWORD));
+        userEntity.setPassword(passwordEncoder.encode(ONBOARD_PIN));
         userEntity.setCredentialsNonExpired(true);
         userEntity.setEmployeeId(ONBOARD_EMPLOYEE_ID);
         userEntity.setCreationDate(LocalDateTime.now());

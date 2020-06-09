@@ -1,38 +1,35 @@
 package com.project.refreshments.entity;
 
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
-import javax.persistence.*;
-
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
+
+import javax.persistence.*;
+import java.io.Serializable;
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 @Entity
 @Accessors(chain = true)
 @Table(name = "top_ups")
 @Data
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
-public class TopUpEntity
+public class TopUpEntity implements Serializable
 {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer transactionId;
+    @Column(name = "top_up_id")
+    private Integer topUpId;
 
-    @Column(nullable = false)
+    @Column(name = "account_id", nullable = false)
     private Integer accountId;
 
-    @Column(nullable = false)
+    @Column(name = "amount", nullable = false)
     private BigDecimal amount;
 
-    @Column(nullable = false)
-    private boolean isToppingUp;
-
-    @Column(nullable = true)
-    private String item;
-
-    @Column(nullable = false)
+    @Column(name = "top_up_date", nullable = false)
     private LocalDateTime topUpDate;
 
 }

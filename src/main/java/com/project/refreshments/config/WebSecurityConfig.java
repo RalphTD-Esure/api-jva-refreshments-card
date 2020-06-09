@@ -1,26 +1,20 @@
 package com.project.refreshments.config;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import com.project.refreshments.security.JwtSecurityConfigurer;
 import com.project.refreshments.security.JwtTokenProvider;
+import org.h2.server.web.WebServlet;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.DelegatingPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.crypto.password.StandardPasswordEncoder;
-import org.springframework.security.crypto.scrypt.SCryptPasswordEncoder;
 
 @Configuration
-@EnableWebSecurity
+//@EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter
 {
     @Autowired
@@ -32,34 +26,26 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter
         httpSecurity.httpBasic().disable().csrf().disable().sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and().authorizeRequests().antMatchers("/api-jva-refreshments-card/").permitAll()
-                .antMatchers("/user/registration*").permitAll()
+                .antMatchers("/registration*").permitAll()
+                .antMatchers("/login*").permitAll()
                 .antMatchers("/h2/**").permitAll()
                 .antMatchers("/**").hasRole("USER")
-                .antMatchers("/user/login/**", "/login").permitAll()
-                .antMatchers("/", "/css/**", "/*.css").permitAll()
-                .antMatchers("/user/homepage").permitAll()
+                .antMatchers("/login/**", "/login").permitAll()
+//                .antMatchers("/", "/css/**", "/*.css").permitAll()
+                .antMatchers("/homepage").permitAll()
                 .anyRequest().authenticated()
-                .and()
-                .formLogin().loginPage("/user/login")
-                .loginProcessingUrl("/user/login").defaultSuccessUrl("/homepage.html").failureUrl("/login?error").permitAll()
+//                .and()
+//                .formLogin().loginPage("/login")
+//                .loginProcessingUrl("/login").defaultSuccessUrl("/homepage.html").failureUrl("/login?error").permitAll()
                 .and().apply(new JwtSecurityConfigurer(jwtTokenProvider));
 
                 httpSecurity.headers().frameOptions().disable();
+
     }
 
     @Bean
-    public PasswordEncoder delegatingPasswordEncoder()
-    {
-        PasswordEncoder defaultEncoder = new StandardPasswordEncoder();
-        Map<String, PasswordEncoder> encoders = new HashMap<>();
-        encoders.put("bcrypt", new BCryptPasswordEncoder());
-        encoders.put("scrypt", new SCryptPasswordEncoder());
-
-        DelegatingPasswordEncoder passwordEncoder = new DelegatingPasswordEncoder("bcrypt", encoders);
-
-        passwordEncoder.setDefaultPasswordEncoderForMatches(defaultEncoder);
-
-        return passwordEncoder;
+    public BCryptPasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
     }
 
     @Bean
@@ -69,4 +55,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter
         return super.authenticationManagerBean();
     }
 
+    @Bean
+    ServletRegistrationBean h2servletRegistration()
+    {
+        ServletRegistrationBean registrationBean = new ServletRegistrationBean(new WebServlet());
+        registrationBean.addUrlMappings("/h2/*");
+        return registrationBean;
+
+    }
 }

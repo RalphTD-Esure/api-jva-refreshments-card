@@ -20,14 +20,14 @@ public class AuthenticatedUserFactory {
 
     public AuthenticatedUser create(final UserEntity userEntity) {
         return new AuthenticatedUser()
-                .setUserName(userEntity.getUsername())
+                .setUsername(userEntity.getUsername())
                 .setToken(jwtTokenProvider.createToken(userEntity.getUsername(), userEntity.getRoles()))
                 .welcomeMessage();
     }
 
     public AuthenticatedUser logOut(final UserEntity userEntity) {
         return new AuthenticatedUser()
-                .setUserName(userEntity.getUsername())
+                .setUsername(userEntity.getUsername())
                 .goodbyeMessage();
     }
 }

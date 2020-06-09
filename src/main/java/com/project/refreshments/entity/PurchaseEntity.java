@@ -33,5 +33,4 @@ public class PurchaseEntity
     @Column(nullable = false)
     private LocalDateTime transactionDate;
 
-
 }

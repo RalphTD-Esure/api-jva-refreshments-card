@@ -62,7 +62,6 @@ public class AuthenticationController {
                     .message("A user with the Card ID " + registrationRequestDto.getCardId() + " already exists. Please check the information entered and try again."));
             return new ResponseEntity<>(new RegistrationResponse().addInfosItem(errorInfos.get(0)), HttpStatus.BAD_REQUEST);
         }
-
     }
 
     @PostMapping(path = "/login", consumes = "application/json")

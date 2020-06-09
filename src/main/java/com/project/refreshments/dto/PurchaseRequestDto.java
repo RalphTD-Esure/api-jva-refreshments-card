@@ -1,8 +1,10 @@
 package com.project.refreshments.dto;
 
+import com.project.refreshments.model.Item;
 import lombok.Data;
 
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 @Data
 public class PurchaseRequestDto {
@@ -10,6 +12,6 @@ public class PurchaseRequestDto {
     @NotNull
     private String username;
     @NotNull
-    private Integer itemCode;
+    private List<Item> itemCodes;
 
 }

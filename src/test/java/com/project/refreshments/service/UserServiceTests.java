@@ -1,4 +1,4 @@
-package com.project.refreshments.api;
+package com.project.refreshments.service;
 
 import com.project.refreshments.dto.RegistrationRequestDto;
 import com.project.refreshments.entity.UserEntity;
@@ -6,7 +6,6 @@ import com.project.refreshments.exception.UserAlreadyExistsException;
 import com.project.refreshments.factory.AuthenticatedUserFactory;
 import com.project.refreshments.model.AuthenticatedUser;
 import com.project.refreshments.repository.UserRepository;
-import com.project.refreshments.service.UserService;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -25,7 +24,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-public class RefreshmentsCardUserServiceTests
+public class UserServiceTests
 {
     private static final Integer ONBOARD_EMPLOYEE_ID = 12345;
     private static final String ONBOARD_CARD_ID = "r7jTG7dqBy5wGO4L";

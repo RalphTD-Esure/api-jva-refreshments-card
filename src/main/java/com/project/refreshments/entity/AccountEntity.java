@@ -48,4 +48,11 @@ public class AccountEntity implements Serializable
         return this;
     }
 
+    public AccountEntity subtractFromBalance(BigDecimal amount) {
+        balance = balance == null
+                ? amount
+                : balance.subtract(amount);
+        return this;
+    }
+
 }

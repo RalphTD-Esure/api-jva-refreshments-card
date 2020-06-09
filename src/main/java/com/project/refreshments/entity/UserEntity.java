@@ -9,7 +9,6 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.Collections;
@@ -22,7 +21,7 @@ import java.util.stream.Collectors;
 @Getter
 @Setter
 //@NoArgsConstructor(access = AccessLevel.PUBLIC)
-public class UserEntity implements UserDetails, Serializable
+public class UserEntity implements UserDetails
 {
     private static final long serialVersionUID = 1L;
     private static final List<GrantedAuthority> AUTHORITIES = Collections.singletonList(new SimpleGrantedAuthority("ROLE_USER"));

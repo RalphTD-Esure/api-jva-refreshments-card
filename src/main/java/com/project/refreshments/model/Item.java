@@ -1,13 +1,10 @@
 package com.project.refreshments.model;
 
-import java.math.BigDecimal;
-
 import lombok.Data;
 
 @Data
 public class Item
 {
+    Integer itemCode;
     String itemName;
-    Long itemCode;
-    BigDecimal itemPrice;
 }

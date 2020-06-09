@@ -1,8 +1,8 @@
 package com.project.refreshments.model;
 
-import java.util.HashMap;
-
 import lombok.experimental.Accessors;
+
+import java.util.HashMap;
 
 @Accessors(chain = true)
 public class AuthenticatedUser extends HashMap<String, String>
@@ -29,18 +29,6 @@ public class AuthenticatedUser extends HashMap<String, String>
 
     public String getToken() {
         return this.get(TOKEN);
-    }
-
-    public AuthenticatedUser welcomeMessage() {
-        String welcome = "Welcome, please use your token to now access the top up and pay endpoints.";
-        this.put(MESSAGE, welcome);
-        return this;
-    }
-
-    public AuthenticatedUser goodbyeMessage() {
-        String goodbye = "Goodbye!";
-        this.put(MESSAGE, goodbye);
-        return this;
     }
 
     public AuthenticatedUser addMessage(String message) {

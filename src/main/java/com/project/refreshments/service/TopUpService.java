@@ -5,7 +5,6 @@ import com.project.refreshments.entity.AccountEntity;
 import com.project.refreshments.entity.TopUpEntity;
 import com.project.refreshments.repository.AccountRepository;
 import com.project.refreshments.repository.TopUpRepository;
-import com.project.refreshments.repository.UserRepository;
 import com.project.refreshments.security.UserDetailsServiceImp;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,7 +22,6 @@ public class TopUpService {
 
     private final TopUpRepository topUpRepository;
     private final AccountRepository accountRepository;
-    private final UserRepository userRepository;
     private final UserDetailsServiceImp userDetailsServiceImp;
 
     public BigDecimal addFunds(TopUpRequestDto topUpRequestDto) {

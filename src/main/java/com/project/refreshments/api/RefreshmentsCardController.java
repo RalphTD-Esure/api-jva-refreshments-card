@@ -1,9 +1,12 @@
 package com.project.refreshments.api;
 
 import com.project.api.refreshments.swagger.model.ErrorInfo;
+import com.project.api.refreshments.swagger.model.PurchaseResponse;
 import com.project.api.refreshments.swagger.model.TopUpResponse;
 import com.project.api.refreshments.swagger.model.TopUpResponseDetail;
+import com.project.refreshments.dto.PurchaseRequestDto;
 import com.project.refreshments.dto.TopUpRequestDto;
+import com.project.refreshments.service.PurchaseService;
 import com.project.refreshments.service.TopUpService;
 import com.project.refreshments.service.UserService;
 import lombok.extern.slf4j.Slf4j;
@@ -25,10 +28,13 @@ public class RefreshmentsCardController {
 
     private final UserService userService;
     private final TopUpService addFundsService;
+    private final PurchaseService purchaseService;
 
-    public RefreshmentsCardController(UserService userService, TopUpService addFundsService) {
+    public RefreshmentsCardController(UserService userService, TopUpService addFundsService,
+                                      PurchaseService purchaseService) {
         this.userService = userService;
         this.addFundsService = addFundsService;
+        this.purchaseService = purchaseService;
     }
 
 
@@ -44,6 +50,14 @@ public class RefreshmentsCardController {
             errorInfos.add(new ErrorInfo().message("Username " + topUpRequestDto.getUsername() + " not found."));
             return new ResponseEntity<>(new TopUpResponse().addInfosItem(errorInfos.get(0)), HttpStatus.BAD_REQUEST);
         }
+    }
+
+    @PostMapping(path = "/purchase", consumes = "application/json")
+    public ResponseEntity<PurchaseResponse> purchase(@RequestBody PurchaseRequestDto purchaseRequestDto) {
+        List<ErrorInfo> errorInfos = new ArrayList<>();
+        BigDecimal newBalance;
+        newBalance = purchaseService.makePurchase(purchaseRequestDto);
+        return new ResponseEntity<PurchaseResponse>(new PurchaseResponse().successMessage("Thank you for your purchase, your new balance is £" + newBalance), HttpStatus.OK);
     }
 }
 

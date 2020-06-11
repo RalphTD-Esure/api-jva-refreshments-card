@@ -1,6 +1,6 @@
 package com.project.refreshments.security;
 
-import com.project.refreshments.config.JwtProperties;
+import com.project.refreshments.config.JwtConfig;
 import com.project.refreshments.exception.InvalidJwtAuthenticationException;
 import io.jsonwebtoken.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,10 +17,10 @@ import java.util.List;
 
 
 @Component
-public class JwtTokenProvider {
+public class JwtProvider {
 
     @Autowired
-    private JwtProperties jwtProperties;
+    private JwtConfig jwtConfig;
 
     @Autowired
     private UserDetailsServiceImp userDetailsService;
@@ -29,7 +29,7 @@ public class JwtTokenProvider {
 
     @PostConstruct
     protected void init() {
-        secretKey = Base64.getEncoder().encodeToString(jwtProperties.getSecretKey().getBytes());
+        secretKey = Base64.getEncoder().encodeToString(jwtConfig.getSecretKey().getBytes());
     }
 
     public String createToken(String username, List<String> roles) {
@@ -39,14 +39,14 @@ public class JwtTokenProvider {
 
         Date now = new Date();
         Date validity = new Date(now.getTime() +
-                jwtProperties.getValidityInMs());
+                jwtConfig.getValidityInMs());
 
-        return Jwts.builder()//
-            .setClaims(claims)//
-            .setIssuedAt(now)//
-            .setExpiration(validity)//
-            .signWith(SignatureAlgorithm.HS256, secretKey)//
-            .compact();
+        return Jwts.builder()
+                .setClaims(claims)
+                .setIssuedAt(now)
+                .setExpiration(validity)
+                .signWith(SignatureAlgorithm.HS256, secretKey)
+                .compact();
     }
 
     public Authentication getAuthentication(String token) {

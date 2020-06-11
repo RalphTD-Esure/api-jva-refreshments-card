@@ -17,9 +17,16 @@ public class StockEntity {
     @Column(name = "item_id")
     private Integer itemId;
 
-    @Column(name = "item_price", nullable = false)
+    @Column(name = "item_price")
     private BigDecimal itemPrice;
 
-    @Column(name = "quantity", nullable = false)
-    private int quantity;
+    @Column(name = "quantity")
+    private Integer quantity;
+
+    public StockEntity subtractFromQuantity(Integer amount) {
+        quantity = Math.toIntExact(quantity == null
+                ? amount
+                : quantity - amount);
+        return this;
+    }
 }

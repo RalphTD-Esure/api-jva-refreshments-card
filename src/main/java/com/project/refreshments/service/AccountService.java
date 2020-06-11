@@ -20,7 +20,7 @@ public class AccountService
 
     @Transactional
     public AccountEntity createAccountEntity(final UserEntity userEntity, LocalDateTime creationDate){
-        return accountRepository.saveAndFlush(new AccountEntity().setUser(userEntity).setUsername(userEntity.getUsername()).setActive(true).setBalance(
+        return accountRepository.saveAndFlush(new AccountEntity().setUsername(userEntity.getUsername()).setUserId(userEntity.getId()).setActive(true).setBalance(
                 BigDecimal.ZERO)).setCreationDate(creationDate);
     }
 }

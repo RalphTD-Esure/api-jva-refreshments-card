@@ -28,34 +28,31 @@ public class UserEntity implements UserDetails
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    @Column(name = "id", nullable = false)
+    @Column(name = "id")
     private Integer id;
 
-    @Column(name = "employee_id", nullable = false)
+    @Column(name = "employee_id")
     private Integer employeeId;
 
-    @Column(name = "username", nullable = false)
+    @Column(name = "username")
     private String username;
 
-    @Column(name = "first_name", nullable = false)
+    @Column(name = "first_name")
     private String firstName;
 
-    @Column(name = "last_name", nullable = false)
+    @Column(name = "last_name")
     private String lastName;
 
-    @Column(name = "email", nullable = false)
+    @Column(name = "email")
     private String email;
 
-    @Column(name ="password", nullable = false)
+    @Column(name ="password")
     private String password;
 
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
-    private AccountEntity account;
-
-    @Column(name = "creation_date", nullable = false)
+    @Column(name = "creation_date")
     private LocalDateTime creationDate;
 
-    @Column(name ="credentials_non_expired", nullable = false)
+    @Column(name ="credentials_non_expired")
     private Boolean credentialsNonExpired;
 
 

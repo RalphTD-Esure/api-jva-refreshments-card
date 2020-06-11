@@ -23,13 +23,13 @@ public class TopUpEntity implements Serializable
     @Column(name = "top_up_id")
     private Integer topUpId;
 
-    @Column(name = "account_id", nullable = false)
+    @Column(name = "account_id")
     private Integer accountId;
 
-    @Column(name = "amount", nullable = false)
+    @Column(name = "amount")
     private BigDecimal amount;
 
-    @Column(name = "top_up_date", nullable = false)
+    @Column(name = "top_up_date")
     private LocalDateTime topUpDate;
 
 }

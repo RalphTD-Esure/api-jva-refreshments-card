@@ -21,16 +21,16 @@ public class PurchaseEntity
     @Column(name = "purchase_id")
     private Integer purchaseId;
 
-    @Column(name = "account_id", nullable = false)
-    private long accountId;
+    @Column(name = "account_id")
+    private Integer accountId;
 
-    @Column(name = "price", nullable = false)
+    @Column(name = "price")
     private BigDecimal price;
 
-    @Column(name = "item_id", nullable = false)
-    private String itemId;
+    @Column(name = "item_id")
+    private Integer itemId;
 
-    @Column(nullable = false)
-    private LocalDateTime transactionDate;
+    @Column(name = "purchase_date")
+    private LocalDateTime purchaseDate;
 
 }

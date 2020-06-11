@@ -3,12 +3,12 @@ package com.project.refreshments.service;
 import com.project.refreshments.dto.TopUpRequestDto;
 import com.project.refreshments.entity.AccountEntity;
 import com.project.refreshments.entity.TopUpEntity;
+import com.project.refreshments.entity.UserEntity;
 import com.project.refreshments.repository.AccountRepository;
 import com.project.refreshments.repository.TopUpRepository;
-import com.project.refreshments.security.UserDetailsServiceImp;
+import com.project.refreshments.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -22,29 +22,30 @@ public class TopUpService {
 
     private final TopUpRepository topUpRepository;
     private final AccountRepository accountRepository;
-    private final UserDetailsServiceImp userDetailsServiceImp;
+    private final UserRepository userRepository;
 
-    public BigDecimal addFunds(TopUpRequestDto topUpRequestDto) {
+    public BigDecimal addFunds(final TopUpRequestDto topUpRequestDto) {
 
         String username = topUpRequestDto.getUsername();
         BigDecimal topUpAmount = topUpRequestDto.getAmount();
 
-        UserDetails userDetails = userDetailsServiceImp.loadUserByUsername(username);
-        Optional<AccountEntity> accountEntity = accountRepository.findByUsername(userDetails.getUsername());
+        Optional<UserEntity> userEntityOptional = userRepository.findByUsername(username);
+        UserEntity userEntity = userEntityOptional.get();
+        Optional<AccountEntity> accountEntityOptional = accountRepository.findByUsername(userEntity.getUsername());
 
-        if (accountEntity != null) {
-            AccountEntity account = accountEntity.get();
+        if (accountEntityOptional.isPresent()) {
+            AccountEntity account = accountEntityOptional.get();
             TopUpEntity topUpEntity = createTopUpEntity(topUpRequestDto, account);
-            topUpRepository.save(topUpEntity);
             account.addToBalance(topUpAmount);
-            accountRepository.save(account);
+            topUpRepository.saveAndFlush(topUpEntity);
+            accountRepository.saveAndFlush(account);
             return account.getBalance();
         } else {
-            throw new IllegalArgumentException("No account found for Id");
+            throw new IllegalArgumentException("No account found for ID");
         }
     }
 
-    private TopUpEntity createTopUpEntity(TopUpRequestDto topUpRequestDto, AccountEntity account) {
-        return new TopUpEntity().setTopUpDate(LocalDateTime.now()).setAmount(topUpRequestDto.getAmount()).setAccountId(account.getId());
+    public TopUpEntity createTopUpEntity(TopUpRequestDto topUpRequestDto, AccountEntity account) {
+        return new TopUpEntity().setAccountId(account.getId()).setAmount(topUpRequestDto.getAmount()).setTopUpDate(LocalDateTime.now());
     }
 }

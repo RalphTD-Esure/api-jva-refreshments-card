@@ -2,27 +2,24 @@ package com.project.refreshments.factory;
 
 import com.project.refreshments.entity.UserEntity;
 import com.project.refreshments.model.AuthenticatedUser;
-import com.project.refreshments.security.JwtTokenProvider;
+import com.project.refreshments.security.JwtProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-
-
 @Component
 public class AuthenticatedUserFactory {
-    private final JwtTokenProvider jwtTokenProvider;
+    private final JwtProvider jwtProvider;
 
     @Autowired
-    public AuthenticatedUserFactory(final JwtTokenProvider jwtTokenProvider)
+    public AuthenticatedUserFactory(final JwtProvider jwtProvider)
     {
-        this.jwtTokenProvider = jwtTokenProvider;
+        this.jwtProvider = jwtProvider;
     }
 
     public AuthenticatedUser create(final UserEntity userEntity) {
         return new AuthenticatedUser()
                 .setUsername(userEntity.getUsername())
-                .setToken(jwtTokenProvider.createToken(userEntity.getUsername(), userEntity.getRoles()))
-                .welcomeMessage();
+                .setToken(jwtProvider.createToken(userEntity.getUsername(), userEntity.getRoles()));
     }
 
     public AuthenticatedUser logOut(final UserEntity userEntity) {

@@ -1,5 +1,6 @@
 package com.project.refreshments.dto;
 
+import com.project.refreshments.validation.PinValidator;
 import com.project.refreshments.validation.ValidEmail;
 import lombok.Data;
 
@@ -9,6 +10,7 @@ import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 @Data
+@PinValidator(first = "pin", second = "confirmPin", message = "PINs entered do not match.")
 public class RegistrationRequestDto
 {
     @NotNull
@@ -40,5 +42,6 @@ public class RegistrationRequestDto
     private String pin;
 
     @NotNull
+    @Pattern(regexp = "^[0-9]{4}$")
     private String confirmPin;
 }

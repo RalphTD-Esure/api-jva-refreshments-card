@@ -31,6 +31,13 @@ public class AuthenticatedUser extends HashMap<String, String>
         return this.get(TOKEN);
     }
 
+
+    public AuthenticatedUser goodbyeMessage() {
+        String goodbye = "Goodbye!";
+        this.put(MESSAGE, goodbye);
+        return this;
+    }
+
     public AuthenticatedUser addMessage(String message) {
         this.put(MESSAGE, message);
         return this;

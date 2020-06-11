@@ -2,7 +2,6 @@ package com.project.refreshments.service;
 
 import com.project.refreshments.dto.AuthenticationRequestDto;
 import com.project.refreshments.dto.RegistrationRequestDto;
-import com.project.refreshments.entity.AccountEntity;
 import com.project.refreshments.entity.UserEntity;
 import com.project.refreshments.exception.UserAlreadyExistsException;
 import com.project.refreshments.factory.AuthenticatedUserFactory;
@@ -33,6 +32,16 @@ public class UserService {
     private final AccountService accountService;
     private final AccountRepository accountRepository;
 
+    public String welcome(String username) {
+        if(userExists(username)) {
+            String welcomeMessage = "Welcome " + userRepository.findByUsername(username).get().getFirstName() + ", please login with your Card ID and chosen PIN at /login.";
+            return welcomeMessage;
+        } else {
+            String welcomeMessage = "Welcome! Please register with Bows Formula 1 Food Hall at /registration to access features.";
+            return welcomeMessage;
+        }
+    }
+
     @Transactional
     public AuthenticatedUser register(RegistrationRequestDto registrationRequestDto) {
         log.debug("Registering user with information: {}", registrationRequestDto);
@@ -42,12 +51,12 @@ public class UserService {
         }
         final UserEntity userEntity = userRepository
                 .saveAndFlush(createUserEntity(LocalDateTime.now(), registrationRequestDto));
-        final AccountEntity accountEntity = accountRepository.
+        this.accountRepository.
                 saveAndFlush(accountService.createAccountEntity(userEntity, LocalDateTime.now()));
         return authenticatedUserFactory.create(userEntity);
     }
 
-    public AuthenticatedUser signIn(final AuthenticationRequestDto authenticationRequestDto) {
+    public AuthenticatedUser logIn(final AuthenticationRequestDto authenticationRequestDto) {
         try {
             final String username = authenticationRequestDto.getUsername();
             authenticationManager
@@ -60,7 +69,7 @@ public class UserService {
         }
     }
 
-    private final boolean userExists(String cardId) {
+    public final boolean userExists(String cardId) {
         return userRepository.findByUsername(cardId).isPresent();
     }
 

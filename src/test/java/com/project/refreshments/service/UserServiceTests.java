@@ -1,10 +1,13 @@
 package com.project.refreshments.service;
 
 import com.project.refreshments.dto.RegistrationRequestDto;
+import com.project.refreshments.dto.UserCheckDto;
+import com.project.refreshments.entity.AccountEntity;
 import com.project.refreshments.entity.UserEntity;
 import com.project.refreshments.exception.UserAlreadyExistsException;
 import com.project.refreshments.factory.AuthenticatedUserFactory;
 import com.project.refreshments.model.AuthenticatedUser;
+import com.project.refreshments.repository.AccountRepository;
 import com.project.refreshments.repository.UserRepository;
 import org.junit.After;
 import org.junit.Before;
@@ -16,13 +19,13 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 public class UserServiceTests
 {
@@ -36,6 +39,12 @@ public class UserServiceTests
 
     @Mock
     private UserRepository userRepository;
+
+    @Mock
+    private AccountService accountService;
+
+    @Mock
+    private AccountRepository accountRepository;
 
     @Mock
     private AuthenticatedUserFactory authenticatedUserFactory;
@@ -62,9 +71,27 @@ public class UserServiceTests
     }
 
     @Test
-    public void registrationSuccess()
+    public void testUserCheckUserExists() {
+        UserCheckDto userCheckDto = createUserCheckDto();
+        UserEntity userEntity = createUserEntity();
+        when(userRepository.findByUsername(userCheckDto.getCardId())).thenReturn(Optional.of(userEntity));
+        String welcomeMessage = userService.welcome(userCheckDto.getCardId());
+        assertThat(welcomeMessage).isEqualTo("Welcome " + userEntity.getFirstName() + ", please login with your Card ID and chosen PIN at /login.");
+    }
+
+    @Test
+    public void testUserCheckNotUserExists() {
+        UserCheckDto userCheckDto = createUserCheckDto();
+        UserEntity userEntity = createUserEntity();
+        when(userRepository.findByUsername(userCheckDto.getCardId())).thenReturn(Optional.empty());
+        String welcomeMessage = userService.welcome(userCheckDto.getCardId());
+        assertThat(welcomeMessage).isEqualTo("Welcome! Please register with Bows Formula 1 Food Hall at /registration to access features.");
+    }
+
+    @Test
+    public void testRegistrationSuccess()
     {
-        RegistrationRequestDto registrationRequest = createRequest();
+        RegistrationRequestDto registrationRequest = createRegistrationRequest();
 
         ArgumentCaptor<UserEntity> userEntityArgumentCaptor = ArgumentCaptor.forClass(UserEntity.class);
         when(userRepository.findByUsername(ONBOARD_CARD_ID)).thenReturn(Optional.empty());
@@ -89,14 +116,14 @@ public class UserServiceTests
     @Test(expected = UserAlreadyExistsException.class)
     public void testRegistrationThrowsUserAlreadyExistsException()
     {
-        RegistrationRequestDto registrationRequestDto = createRequest();
+        RegistrationRequestDto registrationRequestDto = createRegistrationRequest();
         UserEntity userEntity = createUserEntity();
         when(userRepository.findByUsername(ONBOARD_CARD_ID)).thenReturn(Optional.of(userEntity));
 
         userService.register(registrationRequestDto);
     }
 
-    private RegistrationRequestDto createRequest()
+    private RegistrationRequestDto createRegistrationRequest()
     {
         RegistrationRequestDto registrationRequest = new RegistrationRequestDto();
         registrationRequest.setEmployeeId(ONBOARD_EMPLOYEE_ID);
@@ -122,6 +149,22 @@ public class UserServiceTests
         userEntity.setEmail(ONBOARD_EMAIL);
 
         return userEntity;
+    }
+
+    private AccountEntity createAccountEntity() {
+        AccountEntity accountEntity = new AccountEntity();
+        accountEntity.setUsername(ONBOARD_CARD_ID);
+        accountEntity.setCreationDate(LocalDateTime.now());
+        accountEntity.setBalance(BigDecimal.ZERO);
+        accountEntity.setActive(true);
+        accountEntity.setId(1);
+        return accountEntity;
+    }
+
+    private UserCheckDto createUserCheckDto() {
+        UserCheckDto userCheckDto = new UserCheckDto();
+        userCheckDto.setCardId(ONBOARD_CARD_ID);
+        return userCheckDto;
     }
 
 }

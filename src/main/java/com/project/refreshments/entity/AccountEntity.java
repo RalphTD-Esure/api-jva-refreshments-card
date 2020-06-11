@@ -19,26 +19,25 @@ import java.time.LocalDateTime;
 public class AccountEntity implements Serializable
 {
     @Id
-    @Column(name = "id", nullable = false, unique = true)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", unique = true)
     private Integer id;
 
-    @Column(name = "balance", nullable = false)
+    @Column(name = "user_id")
+    private Integer userId;
+
+    @Column(name = "balance")
     private BigDecimal balance;
 
-    @Column(name = "username", nullable = false)
+    @Column(name = "username")
     private String username;
 
-    @Column(name = "creation_date", updatable = false, nullable = false)
+    @Column(name = "creation_date", updatable = false)
     @CreationTimestamp
     private LocalDateTime creationDate;
 
-    @OneToOne
-    @MapsId
-    private UserEntity user;
-
-    @Column(name = "is_active", nullable = false)
+    @Column(name = "is_active")
     private boolean isActive;
-
 
 
     public AccountEntity addToBalance(BigDecimal amount) {

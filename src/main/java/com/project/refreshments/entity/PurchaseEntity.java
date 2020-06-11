@@ -14,8 +14,7 @@ import java.time.LocalDateTime;
 @Table(name = "purchases")
 @Data
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
-public class PurchaseEntity
-{
+public class PurchaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "purchase_id")

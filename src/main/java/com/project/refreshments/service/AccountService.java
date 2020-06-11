@@ -14,12 +14,11 @@ import java.time.LocalDateTime;
 @Service
 @Slf4j
 @RequiredArgsConstructor
-public class AccountService
-{
+public class AccountService {
     private final AccountRepository accountRepository;
 
     @Transactional
-    public AccountEntity createAccountEntity(final UserEntity userEntity, LocalDateTime creationDate){
+    public AccountEntity createAccountEntity(final UserEntity userEntity, LocalDateTime creationDate) {
         return accountRepository.saveAndFlush(new AccountEntity().setUsername(userEntity.getUsername()).setUserId(userEntity.getId()).setActive(true).setBalance(
                 BigDecimal.ZERO)).setCreationDate(creationDate);
     }

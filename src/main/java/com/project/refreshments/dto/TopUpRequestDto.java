@@ -6,8 +6,7 @@ import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 
 @Data
-public class TopUpRequestDto
-{
+public class TopUpRequestDto {
     @NotNull
     private BigDecimal amount;
 

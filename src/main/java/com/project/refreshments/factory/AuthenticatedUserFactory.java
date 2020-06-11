@@ -11,8 +11,7 @@ public class AuthenticatedUserFactory {
     private final JwtProvider jwtProvider;
 
     @Autowired
-    public AuthenticatedUserFactory(final JwtProvider jwtProvider)
-    {
+    public AuthenticatedUserFactory(final JwtProvider jwtProvider) {
         this.jwtProvider = jwtProvider;
     }
 

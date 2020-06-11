@@ -21,8 +21,7 @@ import java.util.stream.Collectors;
 @Getter
 @Setter
 //@NoArgsConstructor(access = AccessLevel.PUBLIC)
-public class UserEntity implements UserDetails
-{
+public class UserEntity implements UserDetails {
     private static final long serialVersionUID = 1L;
     private static final List<GrantedAuthority> AUTHORITIES = Collections.singletonList(new SimpleGrantedAuthority("ROLE_USER"));
 
@@ -46,13 +45,13 @@ public class UserEntity implements UserDetails
     @Column(name = "email")
     private String email;
 
-    @Column(name ="password")
+    @Column(name = "password")
     private String password;
 
     @Column(name = "creation_date")
     private LocalDateTime creationDate;
 
-    @Column(name ="credentials_non_expired")
+    @Column(name = "credentials_non_expired")
     private Boolean credentialsNonExpired;
 
 
@@ -84,23 +83,23 @@ public class UserEntity implements UserDetails
         return "User{" + "id=" + employeeId + ", name=" + firstName + ", email=" + email + '}';
     }
 
-    @Override public boolean isAccountNonExpired()
-    {
+    @Override
+    public boolean isAccountNonExpired() {
         return true;
     }
 
-    @Override public boolean isAccountNonLocked()
-    {
+    @Override
+    public boolean isAccountNonLocked() {
         return true;
     }
 
-    @Override public boolean isCredentialsNonExpired()
-    {
+    @Override
+    public boolean isCredentialsNonExpired() {
         return credentialsNonExpired;
     }
 
-    @Override public boolean isEnabled()
-    {
+    @Override
+    public boolean isEnabled() {
         return true;
     }
 }

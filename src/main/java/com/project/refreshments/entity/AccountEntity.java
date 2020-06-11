@@ -16,8 +16,7 @@ import java.time.LocalDateTime;
 @Table(name = "accounts")
 @Data
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
-public class AccountEntity implements Serializable
-{
+public class AccountEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", unique = true)

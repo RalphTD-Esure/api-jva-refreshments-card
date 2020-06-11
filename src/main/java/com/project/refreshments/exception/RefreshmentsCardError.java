@@ -1,7 +1,6 @@
 package com.project.refreshments.exception;
 
-public enum RefreshmentsCardError
-{
+public enum RefreshmentsCardError {
 
     USER_ALREADY_EXISTS_ERROR(400);
 

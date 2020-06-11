@@ -2,10 +2,8 @@ package com.project.refreshments.api;
 
 import com.project.refreshments.dto.TopUpRequestDto;
 import com.project.refreshments.entity.AccountEntity;
-import com.project.refreshments.entity.TopUpEntity;
 import com.project.refreshments.entity.UserEntity;
 import com.project.refreshments.repository.AccountRepository;
-import com.project.refreshments.repository.TopUpRepository;
 import com.project.refreshments.repository.UserRepository;
 import com.project.refreshments.service.TopUpService;
 import org.junit.Before;
@@ -30,8 +28,6 @@ public class TopUpServiceTests {
     private static final String ONBOARD_EMAIL = "john@smith.com";
     private static final String ONBOARD_PIN = "1234";
 
-    @Mock
-    TopUpRepository topUpRepository;
 
     @Mock
     AccountRepository accountRepository;
@@ -68,14 +64,6 @@ public class TopUpServiceTests {
         accountEntity.setBalance(BigDecimal.TEN);
         accountEntity.setCreationDate(LocalDateTime.parse("2020-06-02T00:29:53.949"));
         return accountEntity;
-    }
-
-    private TopUpEntity createTopUpEntity() {
-        TopUpEntity topUpEntity = new TopUpEntity();
-        topUpEntity.setAccountId(1);
-        topUpEntity.setTopUpDate(LocalDateTime.parse("2020-06-02T00:30:53.949"));
-        topUpEntity.setAmount(BigDecimal.ONE);
-        return topUpEntity;
     }
 
     private TopUpRequestDto createTopUpRequestDto() {

@@ -11,15 +11,14 @@ import javax.validation.constraints.Size;
 
 @Data
 @PinValidator(first = "pin", second = "confirmPin", message = "PINs entered do not match.")
-public class RegistrationRequestDto
-{
+public class RegistrationRequestDto {
     @NotNull
     @Max(999999)
     private Integer employeeId;
 
     @NotNull
     @Size(min = 16, max = 16)
-    @Pattern(regexp="^[a-zA-Z0-9]{16}$")
+    @Pattern(regexp = "^[a-zA-Z0-9]{16}$")
     private String cardId;
 
     @NotNull

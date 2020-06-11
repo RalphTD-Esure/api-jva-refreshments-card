@@ -5,8 +5,7 @@ import lombok.experimental.Accessors;
 import java.util.HashMap;
 
 @Accessors(chain = true)
-public class AuthenticatedUser extends HashMap<String, String>
-{
+public class AuthenticatedUser extends HashMap<String, String> {
 
     private static final long serialVersionUID = 1L;
     private static final String USERNAME = "username";

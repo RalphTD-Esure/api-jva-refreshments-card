@@ -15,8 +15,7 @@ import java.time.LocalDateTime;
 @Table(name = "top_ups")
 @Data
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
-public class TopUpEntity implements Serializable
-{
+public class TopUpEntity implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

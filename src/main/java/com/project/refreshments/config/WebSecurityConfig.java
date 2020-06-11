@@ -34,12 +34,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter
                 .anyRequest().authenticated()
                 .and().apply(new JwtSecurityConfigurer(jwtProvider));
 
-                httpSecurity.headers().frameOptions().disable();
+        httpSecurity.headers().frameOptions().disable();
 
     }
 
     @Bean
-    public BCryptPasswordEncoder passwordEncoder() {
+    public BCryptPasswordEncoder passwordEncoder()
+    {
         return new BCryptPasswordEncoder();
     }
 
